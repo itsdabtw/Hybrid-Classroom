@@ -4,7 +4,6 @@ import SignIn from './SignIn'
 import SignUp from './SignUp'
 import { Routes, Route} from 'react-router-dom';
 import Layout from './Layout';
-// import Navbars from './components/Navbars';
 
 function App() {
   return (

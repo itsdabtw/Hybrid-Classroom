@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -12,23 +11,36 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-
 
 
 const theme = createTheme();
 
 export default function SignIn() {
-  const navigate = useNavigate();
+
+  const userRef = useRef();
+  const errRef = useRef();
   
+  const[user,setUser] = useState ('');
+  const[pwd, setPwd] = useState ('');
+  const[errMsg, setErrMsg] = useState ('');
+  const[success, setSuccess] = useState('');
+
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     navigate("/home")
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+      console.log({
+        email: user,
+        password: pwd,
+      });
+      setUser('');
+      setPwd('');
+      setSuccess(true);
+    
   };
 
   return (
@@ -57,6 +69,9 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={(e) => setUser(e.target.value)}
+              value = {user}
+
             />
             <TextField
               margin="normal"
@@ -67,6 +82,9 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={(e) => setPwd(e.target.value)}
+              value = {pwd}
+
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -82,7 +100,7 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="register" variant="body2">
                   {"Chưa có tài khoản? Đăng ký"}
                 </Link>
               </Grid>
@@ -91,5 +109,6 @@ export default function SignIn() {
         </Box>
       </Container>
     </ThemeProvider>
+    
   );
 }
