@@ -11,32 +11,33 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 
 export const mainListItems = (
+  
   <React.Fragment>
-    <ListItemButton>
+    <ListItemButton href='/home'>
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary="Tổng quan" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton href='/study'>
       <ListItemIcon>
         <SchoolIcon />
       </ListItemIcon>
       <ListItemText primary="Học liệu" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton href='/students'>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
       <ListItemText primary="Học sinh" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton href='/statistic'>
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
       <ListItemText primary="Thống kê" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton href='/calendar'>
       <ListItemIcon>
         <CalendarMonthIcon />
       </ListItemIcon>

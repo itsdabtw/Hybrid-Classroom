@@ -100,7 +100,7 @@ function DashboardContent() {
               <MenuIcon />
             </IconButton>
 
-            <Button color ="inherit" sx={{ flexGrow: 1 }}>
+            <Button href="/home" color ="inherit" sx={{ flexGrow: 1 }}>
             <MenuBookIcon fontSize='large' />
             <Typography
               pl={1}
