@@ -11,65 +11,50 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useRef, useState, useEffect, useContext } from 'react';
+import { useState} from 'react';
 import { useNavigate } from "react-router-dom";
-import AuthContext from './context/AuthProvider';
 import axios from './api/axios';
-
-const LOGIN_URL = '/auth';
-
 
 const theme = createTheme();
 
 export default function SignIn() {
-  const { setAuth } = useContext(AuthContext);
-  const userRef = useRef();
-  const errRef = useRef();
-  
-  const[user,setUser] = useState ('');
-  const[pwd, setPwd] = useState ('');
-  const[errMsg, setErrMsg] = useState ('');
-  const[success, setSuccess] = useState('');
+
+  const A = '19520379';
+  const passA = 'aaa';
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState ('');
 
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
-    navigate("/home")
     event.preventDefault();
+    if (email === A && password === passA){
+      console.log("You're logged in");
+      navigate('/home');
+    } console.log('Wrong ID or Password');
 
-    try {
-      const response = await axios.post(LOGIN_URL, 
-        JSON.stringify({username: user,password: pwd}),
-        {
-          headers: {'Content-Type': 'application/json' },
-          withCredentials: true
-        }
-        );
-      console.log(JSON.stringify(response?.data));
-      const accessToken = response?.data?.accessToken;
-      const roles = response?.data?.roles;
-      setAuth({user, pwd, roles, accessToken});
-      setUser('');
-      setPwd('');
-      setSuccess(true);
-    } catch (err) {
-      if (!err?.response) {
-        setErrMsg('No Server Response');
-    } else if (err.response?.status === 400) {
-        setErrMsg('Missing Username or Password');
-    } else if (err.response?.status === 401) {
-        setErrMsg('Unauthorized');
-    } else {
-        setErrMsg('Login Failed');
+   /* const config = {
+      headers:{
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       }
-      
-    }
-    const data = new FormData(event.currentTarget);
-      console.log({
-        email: user,
-        password: pwd,
-      });
-  };
+    };
+    axios.get('https://hybrid-smart-class.onrender.com/api/v1/user', {
+    username: email,
+    password: password
+  }, config)
+  .then(response => {
+    setMessage("You're logged in");
+    console.log("You're logged in");
+    navigate('/home'); // điều hướng user sang trang home.
+  })
+  .catch(error => {
+    console.log(error);
+    setErrorMessage("Login failed");
+  }); */
+};
 
   return (
     <ThemeProvider theme={theme}>
@@ -97,8 +82,8 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
-              onChange={(e) => setUser(e.target.value)}
-              value = {user}
+              onChange={(e) => setEmail(e.target.value)}
+              value = {email}
 
             />
             <TextField
@@ -110,8 +95,8 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
-              onChange={(e) => setPwd(e.target.value)}
-              value = {pwd}
+              onChange={(e) => setPassword(e.target.value)}
+              value = {password}
 
             />
             <FormControlLabel

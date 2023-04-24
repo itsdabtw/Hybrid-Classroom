@@ -20,7 +20,12 @@ export default function AccountMenu() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+    
   };
+  const handleLogout = () => {
+    setAnchorEl(null);
+    navigate('/')
+  }
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -84,7 +89,7 @@ export default function AccountMenu() {
           </ListItemIcon>
           Thiết lập
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
