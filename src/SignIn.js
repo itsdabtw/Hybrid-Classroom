@@ -29,7 +29,7 @@ export default function SignIn() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (username === A && password === passA){
+    if (username === '19520379' && password === 'aaa'){
       console.log("You're logged in");
       navigate('/home');
     } console.log('Wrong ID or Password'); 

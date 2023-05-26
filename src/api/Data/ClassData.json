@@ -1,0 +1,40 @@
+{
+    "19520379": [
+        {"2022": [
+            {"sem1": [
+                {"classes": [
+                    {
+                        "classID": "IT001.MTCL",
+                        "classDes": "Nhập môn lập trình chất lượng cao năm học 2021-2022",
+                        "img": "https://mui.com/static/images/cards/contemplative-reptile.jpg"
+                    },
+                    {
+                        "classID": "MA003.MTCL",
+                        "classDes": "Đại số tuyến tính chất lượng cao năm học 2021-2022",
+                        "img": "https://mui.com/static/images/cards/contemplative-reptile.jpg"
+                    },
+                    {
+                        "classID": "CE212.MTCL",
+                        "classDes": "Lý thuyết mạch điện chất lượng cao năm học 2021-2022",
+                        "img": "https://mui.com/static/images/cards/contemplative-reptile.jpg"
+                    }
+                ]}
+                
+            ]},
+            {"sem2": [
+                {"classes": [
+                    {
+                        "classID": "IT002.MTCL",
+                        "classDes": "Lập trình hướng đối tượng chất lượng cao năm học 2021-2022",
+                        "img": "https://mui.com/static/images/cards/contemplative-reptile.jpg"
+                    },
+                    {
+                        "classID": "MA004.MTCL",
+                        "classDes": "Cấu trúc rời rạc chất lượng cao năm học 2021-2022",
+                        "img": "https://mui.com/static/images/cards/contemplative-reptile.jpg"
+                    }
+                ]}
+        ]}
+    ]
+}
+]}
