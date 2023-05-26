@@ -4,7 +4,10 @@ import SignIn from './SignIn'
 import SignUp from './SignUp'
 import { Routes, Route} from 'react-router-dom';
 import Layout from './Layout';
-import study from './pages/study/study';
+import Home from './Home';
+import ClassHome from './pages/class/ClassHome';
+import Members from './pages/members/Members';
+import Calendar from './components/Calendar';
 
 function App() {
   return (
@@ -14,11 +17,14 @@ function App() {
         <Route path="register" element={<SignUp/>} />
         <Route path="*" element={<SignIn/>} />
         <Route path="/" element={<SignIn/>} />
-        <Route path="home" element={<Dashboard/>} />
-        <Route path="study" element={<study/>} />
+        <Route path="home" element={<Home/>} />
+        <Route path="classhome" element={<Dashboard/>} />
+        <Route path="members" element={<Members/>} />
+        <Route path="calendar" element={<Calendar/>} />
       </Route>
     </Routes>
   );
 }
 
 export default App;
+  

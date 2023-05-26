@@ -11,18 +11,19 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import { mainListItems } from './listItems';
+import { mainListItems } from '../../listItems';
 import { Button } from '@mui/material';
-import AppBarMenuAvatar from './AppBarMenuAvatar';
-import Footer from './Footer';
-import Calendar from './components/Calendar';
-import Title from './Title';
+import AppBarMenuAvatar from '../../AppBarMenuAvatar';
+import Footer from '../../Footer';
+import StudentDataGrid from '../../components/StudentDataGrid';
+import Stack from '@mui/material/Stack';
+
 
 const drawerWidth = 240;
-const ClassName = "IT001.MTCL.1";
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -72,7 +73,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const mdTheme = createTheme();
 
-function DashboardContent() {
+function MembersContent() {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -101,20 +102,20 @@ function DashboardContent() {
               <MenuIcon />
             </IconButton>
 
-          <Button href="/home" color ="inherit" sx={{ flexGrow: 1 }}>
+            <Button href="/home" color ="inherit" sx={{ flexGrow: 1 }}>
             <MenuBookIcon fontSize='large' />
             <Typography
               pl={1}
               component="h1"
               variant="h6"
               color="inherit"
-              noWrap 
+              noWrap
             >
               Hybrid Classroom
             </Typography>
-           </Button>
+            </Button>
 
-            <AppBarMenuAvatar >
+            <AppBarMenuAvatar>
             </AppBarMenuAvatar>
               
           </Toolbar>
@@ -156,15 +157,23 @@ function DashboardContent() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-          <Title>
-                  Lịch học
-                </Title>
+          <Container maxWidth="lg" sx={{ mt: 2, mb: 2 }}>
               <Grid item xs={12}>
-
-                <Calendar>
-                </Calendar>
-              </Grid>            
+                <Paper sx={{ p: 6, display: 'flex', flexDirection: 'column' }}>
+                  <StudentDataGrid>
+                  </StudentDataGrid>
+                </Paper>
+              </Grid>
+              <Stack spacing={2} direction="row" sx={{ mt: 2, mb: 2 }} >
+                <Button variant='contained' color='success'>
+                        Thêm học viên
+                </Button>
+                <Button variant='outlined' color='error'>
+                         Xóa học viên
+                </Button>
+              </Stack>
+                
+                
           </Container>
         </Box>
       </Box>
@@ -174,8 +183,8 @@ function DashboardContent() {
   );
 }
 
-export default function Dashboard() {
-  return <DashboardContent />;
+export default function  Members() {
+  return <MembersContent />;
 }
 
 

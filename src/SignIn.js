@@ -13,7 +13,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState} from 'react';
 import { useNavigate } from "react-router-dom";
-import axios from './api/axios';
+import axios from 'axios';
 
 const theme = createTheme();
 
@@ -21,28 +21,27 @@ export default function SignIn() {
 
   const A = '19520379';
   const passA = 'aaa';
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState ('');
-
+  const [errorMessage, setErrorMessage] = useState ("");
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (email === A && password === passA){
+    if (username === A && password === passA){
       console.log("You're logged in");
       navigate('/home');
-    } console.log('Wrong ID or Password');
+    } console.log('Wrong ID or Password'); 
 
-   /* const config = {
+    /* const config = {
       headers:{
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       }
     };
-    axios.get('https://hybrid-smart-class.onrender.com/api/v1/user', {
-    username: email,
+    axios.post('https://hybrid-smart-class.onrender.com/api/v1/auth/login', {
+    username: username,
     password: password
   }, config)
   .then(response => {
@@ -51,10 +50,10 @@ export default function SignIn() {
     navigate('/home'); // điều hướng user sang trang home.
   })
   .catch(error => {
-    console.log(error);
+    console.log('Wrong ID or Password');
     setErrorMessage("Login failed");
   }); */
-};
+}; 
 
   return (
     <ThemeProvider theme={theme}>
@@ -77,13 +76,13 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Địa chỉ Email"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="Tên người dùng"
+              name="username"
+              autoComplete="username"
               autoFocus
-              onChange={(e) => setEmail(e.target.value)}
-              value = {email}
+              onChange={(e) => setUsername(e.target.value)}
+              value = {username}
 
             />
             <TextField

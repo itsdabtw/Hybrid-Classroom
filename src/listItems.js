@@ -2,72 +2,44 @@ import * as React from 'react';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import SchoolIcon from '@mui/icons-material/School';
+import LogoutIcon from '@mui/icons-material/Logout';
+import ArchiveIcon from '@mui/icons-material/Archive';
 import PeopleIcon from '@mui/icons-material/People';
-import BarChartIcon from '@mui/icons-material/BarChart';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import AssignmentIcon from '@mui/icons-material/Assignment';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 
 export const mainListItems = (
   
   <React.Fragment>
-    <ListItemButton href='/home'>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="Tổng quan" />
-    </ListItemButton>
-    <ListItemButton href='/study'>
-      <ListItemIcon>
-        <SchoolIcon />
-      </ListItemIcon>
-      <ListItemText primary="Học liệu" />
-    </ListItemButton>
-    <ListItemButton href='/students'>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Học sinh" />
-    </ListItemButton>
-    <ListItemButton href='/statistic'>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Thống kê" />
-    </ListItemButton>
-    <ListItemButton href='/calendar'>
+    <ListItemButton href='/classhome'>
       <ListItemIcon>
         <CalendarMonthIcon />
       </ListItemIcon>
       <ListItemText primary="Lịch học" />
     </ListItemButton>
-  </React.Fragment>
-);
-
-export const secondaryListItems = (
-  <React.Fragment>
-    <ListSubheader component="div" inset>
-      Lớp hiện có
-    </ListSubheader>
-    <ListItemButton>
+    <ListItemButton href='/members'>
       <ListItemIcon>
-        <AssignmentIcon />
+        <PeopleIcon />
       </ListItemIcon>
-      <ListItemText primary="Lớp A" />
+      <ListItemText primary="Thành viên" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton href='/homework'>
       <ListItemIcon>
-        <AssignmentIcon />
+        <AutoStoriesIcon />
       </ListItemIcon>
-      <ListItemText primary="Lớp B" />
+      <ListItemText primary="Bài tập" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton href='/doc'>
       <ListItemIcon>
-        <AssignmentIcon />
+        <ArchiveIcon />
       </ListItemIcon>
-      <ListItemText primary="Lớp C" />
+      <ListItemText primary="Tài liệu" />
+    </ListItemButton>
+    <ListItemButton href='/home'>
+      <ListItemIcon>
+        <LogoutIcon />
+      </ListItemIcon>
+      <ListItemText primary="Thoát lớp" />
     </ListItemButton>
   </React.Fragment>
 );
