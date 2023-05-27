@@ -19,40 +19,37 @@ const theme = createTheme();
 
 export default function SignIn() {
 
-  const A = '19520379';
-  const passA = 'aaa';
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState ("");
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (username === '19520379' && password === 'aaa'){
+   /* if (username === '19520379' && password === 'aaa'){
       console.log("You're logged in");
       navigate('/home');
-    } console.log('Wrong ID or Password'); 
+    } console.log('Wrong ID or Password'); */ 
 
-    /* const config = {
+    const config = {
       headers:{
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       }
     };
-    axios.post('https://hybrid-smart-class.onrender.com/api/v1/auth/login', {
+    axios.post('http://54.253.92.7/api/v1/auth/login', {
     username: username,
     password: password
   }, config)
   .then(response => {
-    setMessage("You're logged in");
-    console.log("You're logged in");
-    navigate('/home'); // điều hướng user sang trang home.
+    if (response.data.success === true){
+      console.log("You're logged in");
+      localStorage.setItem('id', username);
+      navigate('/home')
+    }
   })
   .catch(error => {
     console.log('Wrong ID or Password');
-    setErrorMessage("Login failed");
-  }); */
+  });
 }; 
 
   return (

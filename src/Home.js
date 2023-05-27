@@ -15,14 +15,7 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Stack from '@mui/material/Stack';
-import Link from '@mui/material/Link';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Paper from '@mui/material/Paper';
-
+import axios from 'axios';
 
 const drawerWidth = 240;
 const cards = [1, 2, 3, 4, 5, 6];
@@ -102,15 +95,6 @@ function HomeContent() {
               Danh sách lớp học
             </Typography>
 
-            <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography>Học kỳ 1 2022-2023</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
             <Grid item xs={12}>
               <Container sx={{ py: 3 }} maxWidth="lg">
           <Grid container spacing={4}>
@@ -143,11 +127,6 @@ function HomeContent() {
           </Grid>
         </Container>
               </Grid>
-            
-          </AccordionDetails>
-        </Accordion>
-             
-             
           </Container>
         </Box>
       </Box>

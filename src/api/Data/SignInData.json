@@ -1,4 +1,10 @@
-{ "users": [ 
-{ "username": "19520379", "password": "aaa"}, 
-{ "username": "19520380", "password": "bbb" }
-] }
+param POST
+{
+    "username": "19520379",
+    "password": "aaa"
+}
+
+Response
+{
+    "success" : true
+}
