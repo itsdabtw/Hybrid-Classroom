@@ -11,6 +11,9 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { useNavigate } from "react-router-dom";
 
+var x = localStorage.getItem("id");
+
+
 export default function AccountMenu() {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -80,7 +83,7 @@ export default function AccountMenu() {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem onClick={handleClose} >
-          <Avatar /> Tên người dùng
+          <Avatar />  18520651
         </MenuItem>
         <Divider />
         <MenuItem onClick={handleClose}>

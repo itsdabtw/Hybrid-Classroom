@@ -98,7 +98,99 @@ function HomeContent() {
             <Grid item xs={12}>
               <Container sx={{ py: 3 }} maxWidth="lg">
           <Grid container spacing={4}>
-            {cards.map((card) => (
+              <Grid item key={0} xs={12} sm={6} md={4}>
+
+
+                <Card sx={{ maxWidth: 345 }}>
+                    <CardMedia
+                    component="img"
+                    alt="green iguana"
+                    height="140"
+                    image="https://mui.com/static/images/cards/contemplative-reptile.jpg"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      IT001.MTCL
+                    </Typography>
+                    <Typography variant="p" color="text.secondary" align="left">
+                      Nhập môn lập trình chất lượng cao năm học 2022-2023
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button href="/classhome" size="small">Vào lớp</Button>
+                    <Button size="small" disabled="true">Xóa lớp</Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+
+              <Grid item key={0} xs={12} sm={6} md={4}>
+
+
+                <Card sx={{ maxWidth: 345 }}>
+                    <CardMedia
+                    component="img"
+                    alt="green iguana"
+                    height="140"
+                    image="https://mui.com/static/images/cards/contemplative-reptile.jpg"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      MA003.MTCL
+                    </Typography>
+                    <Typography variant="p" color="text.secondary" align="left">
+                      Đại số tuyến tính chất lượng cao năm học 2022-2023
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button href="/classhome" size="small">Vào lớp</Button>
+                    <Button size="small" disabled="true">Xóa lớp</Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+
+              <Grid item key={0} xs={12} sm={6} md={4}>
+
+
+                <Card sx={{ maxWidth: 345 }}>
+                    <CardMedia
+                    component="img"
+                    alt="green iguana"
+                    height="140"
+                    image="https://mui.com/static/images/cards/contemplative-reptile.jpg"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      CE212.MTCL
+                    </Typography>
+                    <Typography variant="p" color="text.secondary" align="left">
+                      Nhập môn mạch điện chất lượng cao năm học 2022-2023
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button href="/classhome" size="small">Vào lớp</Button>
+                    <Button size="small" disabled="true">Xóa lớp</Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+
+          </Grid> 
+        </Container>
+              </Grid>
+          </Container>
+        </Box>
+      </Box>
+      <Footer>
+      </Footer>
+    </ThemeProvider>
+  );
+}
+
+export default function Home() {
+  return <HomeContent />;
+}
+
+/* 
+{cards.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
 
 
@@ -122,22 +214,6 @@ function HomeContent() {
                     <Button size="small" disabled="true">Xóa lớp</Button>
                   </CardActions>
                 </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-              </Grid>
-          </Container>
-        </Box>
-      </Box>
-      <Footer>
-      </Footer>
-    </ThemeProvider>
-  );
-}
-
-export default function Home() {
-  return <HomeContent />;
-}
-
-
+              </Grid> 
+            ))} 
+*/

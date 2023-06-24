@@ -32,20 +32,20 @@ const columns = [
 ];
 
 const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35, StudentID: '19520320', class: 'IT001.MTCL' },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: 18 },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  { id: 10, lastName: 'Ben', firstName: 'Harvey', age: 32 },
-  { id: 11, lastName: 'Ben', firstName: 'Lub', age: 62 },
-  { id: 12, lastName: 'Michiel', firstName: 'Harvey', age: 15 },
-  { id: 13, lastName: 'Davie', firstName: 'Harvey', age: 15 },
-  { id: 14, lastName: 'Dads', firstName: 'Haas', age: 15 },
+  { id: 1, lastName: 'Việt Khang', firstName: 'Nguyễn', age: 21, StudentID: '19520320', class: 'IT001.MTCL' },
+  { id: 2, lastName: 'Minh Hoàng', firstName: 'Nguyễn', age: 21, StudentID: '19520321', class: 'IT001.MTCL' },
+  { id: 3, lastName: 'Thiên Trúc', firstName: 'Đinh', age: 19, StudentID: '19520322', class: 'IT001.MTCL' },
+  { id: 4, lastName: 'Thịnh', firstName: 'Đinh', age: 18, StudentID: '19520323', class: 'IT001.MTCL' },
+  { id: 5, lastName: 'Minh Quân', firstName: 'Lê', age: 18, StudentID: '19520324', class: 'IT001.MTCL' },
+  { id: 6, lastName: 'Tường Lân', firstName: 'Đặng', age: 23, StudentID: '19520326', class: 'IT001.MTCL' },
+  { id: 7, lastName: 'Đức Anh', firstName: 'Huỳnh', age: 24, StudentID: '19520327', class: 'IT001.MTCL' },
+  { id: 8, lastName: 'Nhật Linh', firstName: 'Phan Lê', age: 20, StudentID: '19521111', class: 'IT001.MTCL' },
+  { id: 9, lastName: 'Thế Sơn', firstName: 'Phan', age: 20, StudentID: '19521234', class: 'IT001.MTCL' },
+  { id: 10, lastName: 'Trung Thành', firstName: 'Lê', age: 18, StudentID: '19520135', class: 'IT001.MTCL' },
+  { id: 11, lastName: 'Xuân Tài', firstName: 'Nguyễn', age: 19, StudentID: '1952123', class: 'IT001.MTCL' },
+  { id: 12, lastName: 'Xuân Tài', firstName: 'Đinh Ngô', age: 22, StudentID: '18520320', class: 'IT001.MTCL' },
+  { id: 13, lastName: 'Khôi Vĩ', firstName: 'Vũ', age: 22, StudentID: '20520320', class: 'IT001.MTCL' },
+  { id: 14, lastName: 'Quang Huy', firstName: 'Đàm', age: 19, StudentID: '19520230', class: 'IT001.MTCL' },
 ];
 
 export default function DataGridDemo() {

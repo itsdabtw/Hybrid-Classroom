@@ -5,9 +5,9 @@ import SignUp from './SignUp'
 import { Routes, Route} from 'react-router-dom';
 import Layout from './Layout';
 import Home from './Home';
-import ClassHome from './pages/class/ClassHome';
+import Doc from './pages/doc/Doc';
 import Members from './pages/members/Members';
-import Calendar from './components/Calendar';
+import Homework from './pages/homework/Homework';
 
 function App() {
   return (
@@ -19,8 +19,9 @@ function App() {
         <Route path="/" element={<SignIn/>} />
         <Route path="home" element={<Home/>} />
         <Route path="classhome" element={<Dashboard/>} />
-        <Route path="members" element={<Members/>} />
-        <Route path="calendar" element={<Calendar/>} />
+        <Route path="members" element={<Members/>} /> 
+        <Route path="homework" element={<Homework/>} />
+        <Route path="doc" element={<Doc/>} />
       </Route>
     </Routes>
   );
