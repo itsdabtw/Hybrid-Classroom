@@ -15,7 +15,6 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import axios from 'axios';
 
 const drawerWidth = 240;
 const cards = [1, 2, 3, 4, 5, 6];
