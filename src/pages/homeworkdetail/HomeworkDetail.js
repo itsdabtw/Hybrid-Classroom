@@ -18,11 +18,12 @@ function HomeworkDetail() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const { data, inputTimer } = location.state.exercise;
   const [timeUp, setTimeUp] = useState(false);
 
-  const questions = location.state.exercise.data;
+  const questions = data;
   const mdTheme = createTheme();
-  const minutesDefalut = questions.inputTimer;
+  const minutesDefalut = inputTimer;
 
   const onCompleteRecord = () => {
     alert("Hết thời gian làm bài");
