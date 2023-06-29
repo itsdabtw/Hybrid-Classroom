@@ -1,0 +1,10 @@
+param POST
+{
+    "username": "19520379",
+    "password": "aaa"
+}
+
+Response
+{
+    "success" : true
+}

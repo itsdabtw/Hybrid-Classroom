@@ -1,0 +1,29 @@
+param POST
+{
+    "id": "19520379"
+}
+
+Response
+{
+    "success" : true,
+    "data": [
+        {
+            "classID": "IT001MTCL",
+            "nameClass": "IT001.MTCL",
+            "desClass": "Nhập môn lập trình chất lượng cao năm học 2021-2022",
+            "imgClass": "https://mui.com/static/images/cards/contemplative-reptile.jpg"
+        },
+        {
+            "classID": "MA003MTCL",
+            "nameClass": "MA003.MTCL",
+            "desClass": "Đại số tuyến tính chất lượng cao năm học 2021-2022",
+            "imgClass": "https://mui.com/static/images/cards/contemplative-reptile.jpg"
+        },
+        {
+            "classID": "CE212MTCL",
+            "nameClass": "CE212.MTCL",
+            "desClass": "Lý thuyết mạch điện chất lượng cao năm học 2021-2022",
+            "imgClass": "https://mui.com/static/images/cards/contemplative-reptile.jpg"
+        }
+    ]
+}
