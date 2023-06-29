@@ -8,6 +8,7 @@ import Home from "./Home";
 import Doc from "./pages/doc/Doc";
 import Members from "./pages/members/Members";
 import Homework from "./pages/homework/Homework";
+import HomeworkDetail from "./pages/homeworkdetail/HomeworkDetail";
 
 function App() {
   return (
@@ -15,12 +16,14 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route path="login" element={<SignIn />} />
         <Route path="register" element={<SignUp />} />
+        <Route path="*" element={<SignIn />} />
         <Route path="/" element={<SignIn />} />
         <Route path="home" element={<Home />} />
         <Route path="classhome" element={<Dashboard />} />
         <Route path="members" element={<Members />} />
         <Route path="homework" element={<Homework />} />
         <Route path="doc" element={<Doc />} />
+        <Route path="homeworkdetail" element={<HomeworkDetail />} />
       </Route>
     </Routes>
   );

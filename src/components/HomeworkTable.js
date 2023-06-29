@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -15,8 +15,10 @@ import DownloadIcon from "@mui/icons-material/Download";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
-import { ListItem } from "@mui/material";
+import { Link, ListItem } from "@mui/material";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -60,6 +62,28 @@ const rows = [
 ];
 
 export default function HomeworkTable() {
+  const navigate = useNavigate();
+  const urlAPI = "http://54.253.92.7/api/v1/quetion/custom/ktmt001";
+  const [progressApp, setCounter] = useState(0);
+
+  useEffect(() => {
+    const storedCounter = localStorage.getItem("idx_question");
+    if (storedCounter) {
+      setCounter(JSON.parse(storedCounter));
+    }
+  }, []);
+  const openExercise = async () => {
+    await axios
+      .get(urlAPI)
+      .then((response) => {
+        navigate("/homeworkdetail", {
+          state: { exercise: response.data },
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <TableContainer component={Paper}>
       <ListItem>
@@ -87,7 +111,6 @@ export default function HomeworkTable() {
           </IconButton>
         </Paper>
       </ListItem>
-
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -104,15 +127,22 @@ export default function HomeworkTable() {
               key={row.name}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell>{row.name}</TableCell>
+              <TableCell>
+                <Link
+                  color="#1a90ff"
+                  underline="hover"
+                  onClick={() => openExercise()}
+                >
+                  {row.name}
+                </Link>
+              </TableCell>
               <TableCell>
                 <BorderLinearProgress
                   variant="determinate"
-                  value={row.progress}
+                  value={progressApp * 100}
                 />
               </TableCell>
               <TableCell align="center">{row.deadline}</TableCell>
-
               <TableCell align="center">
                 <IconButton href={row.download}>
                   <DownloadIcon />
