@@ -36,7 +36,7 @@ export default function Result(props) {
       </CardContent>
       <CardActions sx={{ display: "flex", justifyContent: "center" }}>
         <Button onClick={restartQuiz} variant="outlined">
-          Retry
+          Nộp bài
         </Button>
       </CardActions>
     </Card>
