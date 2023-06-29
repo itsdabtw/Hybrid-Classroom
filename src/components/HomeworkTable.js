@@ -111,7 +111,6 @@ export default function HomeworkTable() {
           </IconButton>
         </Paper>
       </ListItem>
-
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -144,7 +143,6 @@ export default function HomeworkTable() {
                 />
               </TableCell>
               <TableCell align="center">{row.deadline}</TableCell>
-
               <TableCell align="center">
                 <IconButton href={row.download}>
                   <DownloadIcon />
