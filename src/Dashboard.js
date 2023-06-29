@@ -24,7 +24,6 @@ import Deposits from "./Deposits";
 import { useLocation } from "react-router-dom";
 
 const drawerWidth = 240;
-const ClassName = "IT001.MTCL.1";
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
