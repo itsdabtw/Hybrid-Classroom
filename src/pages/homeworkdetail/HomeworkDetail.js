@@ -22,7 +22,7 @@ function HomeworkDetail() {
 
   const questions = location.state.exercise.data;
   const mdTheme = createTheme();
-  const minutesDefalut = 0.1;
+  const minutesDefalut = questions.inputTimer;
 
   const onCompleteRecord = () => {
     alert("Hết thời gian làm bài");
