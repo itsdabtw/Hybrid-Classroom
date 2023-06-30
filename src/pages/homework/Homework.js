@@ -22,6 +22,7 @@ import Footer from "../../Footer";
 import HomeworkTable from "../../components/HomeworkTable";
 import Title from "../../Title";
 import FormDialog from "../homeworkdetail/CreateHomework";
+import axios from "axios";
 
 const drawerWidth = 240;
 
@@ -76,7 +77,16 @@ function HomeworkContent() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
-
+  React.useEffect(() => {
+    axios
+      .get("http://54.253.92.7/api/v1/quetion/custom/ktmt001")
+      .then((response) => {
+        localStorage.setItem("exercise", JSON.stringify(response.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>

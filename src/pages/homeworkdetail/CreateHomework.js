@@ -7,12 +7,12 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import axios from "axios";
 
 export default function FormDialog() {
   const [open, setOpen] = React.useState(false);
   const [result, setResult] = React.useState([]);
   const [question, setQuestion] = React.useState("");
-  const [value, setValue] = React.useState("");
   const [inputTimer, setTimer] = React.useState("");
   const [correctAnswer, setCorrectAnswer] = React.useState("");
   const [alueAnswerA, setValueAnswerA] = React.useState("");
@@ -23,9 +23,32 @@ export default function FormDialog() {
   const handleClickOpen = () => {
     setOpen(true);
   };
+  const urlAPI = "http://54.253.92.7/api/v1/quetion/custom/ktmt001";
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleClose = async () => {
+    await axios
+      .post(urlAPI, {
+        correctAnswer: correctAnswer,
+        inputTimer: inputTimer,
+        options: [alueAnswerA, alueAnswerB, alueAnswerC, alueAnswerD],
+        tittle: question,
+      })
+      .then(() => {
+        setOpen(false);
+        axios
+          .get(urlAPI)
+          .then((response) => {
+            localStorage.setItem("exercise", JSON.stringify(response.data));
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((error) => {
+        // console.log("Wrong ID or Password");
+        console.log(error);
+      })
+      .finally(() => window.location.reload());
   };
 
   const getTimeRecord = (event) => {
@@ -98,7 +121,11 @@ export default function FormDialog() {
     <div>
       <Button
         onClick={handleClickOpen}
-        sx={{ backgroundColor: "#308fe8", color: "white" }}
+        sx={{
+          backgroundColor: "#308fe8",
+          color: "white",
+          marginBottom: "10px",
+        }}
       >
         Tạo bài tập mới
       </Button>
@@ -167,7 +194,7 @@ export default function FormDialog() {
           </FormControl>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Huỷ</Button>
+          <Button onClick={() => setOpen(false)}>Huỷ</Button>
           <Button onClick={handleNextAnswer}>Câu hỏi tiếp theo</Button>
           <Button
             onClick={handleClose}

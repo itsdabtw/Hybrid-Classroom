@@ -78,7 +78,6 @@ function DocContent() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
-
   const getListDocs = () => {
     axios
       .get("http://54.253.92.7/api/v1/docs")

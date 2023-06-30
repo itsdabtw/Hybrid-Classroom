@@ -1,29 +1,40 @@
-import React, { useState } from "react";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
 import {
-  CssBaseline,
   Box,
-  Container,
-  Toolbar,
   Button,
+  Container,
+  CssBaseline,
+  Toolbar,
   Typography,
 } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import QuestionCard from "./QuestionCard";
-import { AppBar } from "../homework/Homework";
-import MenuBookIcon from "@mui/icons-material/MenuBook";
+import React, { useEffect, useState } from "react";
 import Countdown from "react-countdown";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { AppBar } from "../homework/Homework";
+import QuestionCard from "./QuestionCard";
 
 function HomeworkDetail() {
   const location = useLocation();
   const navigate = useNavigate();
-
   const { data, inputTimer } = location.state.exercise;
   const [timeUp, setTimeUp] = useState(false);
 
   const questions = data;
   const mdTheme = createTheme();
   const minutesDefalut = inputTimer;
+
+  useEffect(() => {
+    const handleBack = () => {
+      localStorage.removeItem(
+        location.state.id === 1 ? "idx_question" : "idx_question2"
+      );
+      localStorage.removeItem(location.state.id === 1 ? "result" : "result2");
+      console.log("remove");
+    };
+
+    window.addEventListener("popstate", handleBack);
+  }, []);
 
   const onCompleteRecord = () => {
     alert("Hết thời gian làm bài");
@@ -73,10 +84,12 @@ function HomeworkDetail() {
       </AppBar>
     );
   };
+
   return (
     <ThemeProvider theme={mdTheme}>
       <CssBaseline />
       <Header />
+
       <Box
         sx={{
           backgroundColor: "white",
@@ -86,7 +99,11 @@ function HomeworkDetail() {
         }}
       >
         <Container maxWidth="sm">
-          <QuestionCard questions={questions} isTimeUp={timeUp} />
+          <QuestionCard
+            questions={questions}
+            isTimeUp={timeUp}
+            id={location.state.id}
+          />
         </Container>
       </Box>
     </ThemeProvider>
