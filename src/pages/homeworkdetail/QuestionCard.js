@@ -12,21 +12,19 @@ import FormControl from "@mui/material/FormControl";
 import Result from "./Result";
 
 export default function QuestionCard(props) {
-  const { questions, isTimeUp } = props;
+  const { questions, isTimeUp, id } = props;
   const [value, setValue] = React.useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
   const [answers, setAnswers] = React.useState([]);
   const finishedQuiz = currentQuestionIndex === questions.length;
   const currentQuestion = questions[currentQuestionIndex];
-
+  const progress = currentQuestionIndex / questions.length;
   if (isTimeUp) {
-    const progress = currentQuestionIndex / questions.length;
     localStorage.setItem("idx_question", JSON.stringify(progress));
   }
   const handleChangeRadio = (e) => {
     setValue(e.target.value);
   };
-
   const handleSubmit = () => {
     submitAnswer(value);
     setValue(null);
@@ -44,6 +42,9 @@ export default function QuestionCard(props) {
   const restartQuiz = () => {
     window.location.reload();
   };
+  // if (finishedQuiz) {
+  //   props.isComplete(true);
+  // }
 
   if (finishedQuiz) {
     return (
@@ -51,6 +52,9 @@ export default function QuestionCard(props) {
         restartQuiz={restartQuiz}
         answers={answers}
         questions={questions}
+        isComplete={true}
+        progress={progress}
+        id={id}
       />
     );
   }
@@ -63,7 +67,7 @@ export default function QuestionCard(props) {
           </Typography>
 
           <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            {currentQuestion.content}
+            {currentQuestion?.content}
           </Typography>
 
           <FormControl>
@@ -72,13 +76,13 @@ export default function QuestionCard(props) {
               value={value}
               onChange={handleChangeRadio}
             >
-              {currentQuestion.options.map((o, i) => {
+              {currentQuestion?.options.map((o, i) => {
                 return (
                   <FormControlLabel
                     key={i + 1}
                     value={i + 1}
                     control={<Radio />}
-                    label={o.description}
+                    label={o?.description}
                   />
                 );
               })}

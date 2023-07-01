@@ -4,15 +4,15 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import axios from "axios";
 
 export default function CreateDocs() {
   const [open, setOpen] = React.useState(false);
   const [title, setTitle] = React.useState("");
   const [type, setType] = React.useState("");
-  const [fileUpload, setFileUpload] = React.useState();
+  const [link, setLink] = React.useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -29,10 +29,29 @@ export default function CreateDocs() {
   const getCorrectAnswer = (event) => {
     setType(event.target.value);
   };
+  const url = "http://54.253.92.7/api/v1/docs";
 
-  const handleUpLoad = (event) => {
-    setFileUpload(event.target.files);
-    console.log({ file: event.target.files });
+  const handleUpLoad = async () => {
+    await axios
+      .post(url, {
+        nameDoc: title,
+        url: link,
+        type: type,
+        author: "6481fbd9f553e627524b6701",
+      })
+      .then((reponse) => {
+        console.log(reponse);
+        window.location.reload();
+      })
+      .catch((err) => {
+        alert("Mỗi user chỉ được tạo 1 bài giảng mới");
+        setOpen(false);
+        console.log(err);
+      });
+  };
+
+  const getLink = (event) => {
+    setLink(event.target.value);
   };
   return (
     <div>
@@ -51,15 +70,17 @@ export default function CreateDocs() {
         <DialogContent>
           <TextField margin="dense" label="Tên bài giảng" onChange={getTitle} />
           <h4>Thêm bài giảng mới cho kho dữ liệu của bạn thêm phong phú</h4>
-          <Button variant="contained" component="label">
-            Upload File
-            <input type="file" hidden onChange={handleUpLoad} />
-          </Button>
-          {fileUpload && fileUpload[0].name && (
-            <DialogContentText sx={{ margin: "10px" }}>
-              {fileUpload[0].name}
-            </DialogContentText>
-          )}
+
+          <TextField
+            sx={{
+              marginBottom: "20px",
+            }}
+            label="Link bài giảng"
+            fullWidth
+            multiline
+            maxRows={4}
+            onChange={getLink}
+          />
           <FormControl fullWidth margin="dense">
             <InputLabel>Loại</InputLabel>
             <Select value={type} label="Loại" onChange={getCorrectAnswer}>
@@ -73,7 +94,7 @@ export default function CreateDocs() {
         <DialogActions>
           <Button onClick={handleClose}>Huỷ</Button>
           <Button
-            onClick={handleClose}
+            onClick={handleUpLoad}
             sx={{ backgroundColor: "#308fe8", color: "white" }}
           >
             Tạo bài giảng

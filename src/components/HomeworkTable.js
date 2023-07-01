@@ -1,24 +1,21 @@
-import React, { useEffect, useState } from "react";
+import SearchIcon from "@mui/icons-material/Search";
+import { Link, ListItem } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import InputBase from "@mui/material/InputBase";
+import LinearProgress, {
+  linearProgressClasses,
+} from "@mui/material/LinearProgress";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
-import InputBase from "@mui/material/InputBase";
-import SearchIcon from "@mui/icons-material/Search";
-import DownloadIcon from "@mui/icons-material/Download";
-import LinearProgress, {
-  linearProgressClasses,
-} from "@mui/material/LinearProgress";
-import { Link, ListItem } from "@mui/material";
-import FileUploadIcon from "@mui/icons-material/FileUpload";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -33,56 +30,87 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-function createData(name, progress, deadline, download, upload) {
-  return { name, progress, deadline, download, upload };
-}
-
-const rows = [
-  createData(
-    "Bài tập 1",
-    "100",
-    "24-6-2023",
-    "https://drive.google.com/file/d/1atAtsYIZ_jrAoGxP0BAI5xFxzr9XONDH/view?usp=sharing",
-    "ect"
-  ),
-  createData(
-    "Bài tập 2",
-    "50",
-    "28-6-2023",
-    "https://drive.google.com/file/d/1atAtsYIZ_jrAoGxP0BAI5xFxzr9XONDH/view?usp=sharing",
-    "ect"
-  ),
-  createData(
-    "Bài tập 3",
-    "0",
-    "1-7-2023",
-    "https://drive.google.com/file/d/1atAtsYIZ_jrAoGxP0BAI5xFxzr9XONDH/view?usp=sharing",
-    "ect"
-  ),
-];
-
 export default function HomeworkTable() {
   const navigate = useNavigate();
-  const urlAPI = "http://54.253.92.7/api/v1/quetion/custom/ktmt001";
   const [progressApp, setCounter] = useState(0);
+  const [progressApp2, setCounter2] = useState(0);
+  const [result, setResult] = useState(0);
+  const [result2, setResult2] = useState(0);
+  const [exercise, setExercise] = useState([]);
+  const [timeRecord, setTimeRecord] = useState(1);
+
+  const exercise1 = exercise?.filter((item, index) => index < 5);
+  const exercise2 = exercise?.filter((item, index) => index >= 5 && index < 10);
+  console.log({ exercise2 });
+  console.log({ exercise1 });
+  const rows = [
+    {
+      id: 1,
+      name: "Bài tập 1",
+      progress: progressApp,
+      deadline: "01-07-2023",
+      result: result,
+    },
+    {
+      id: 2,
+      name: "Bài tập 2",
+      progress: progressApp2,
+      deadline: "02-07-2023",
+      result: result2,
+    },
+  ];
 
   useEffect(() => {
     const storedCounter = localStorage.getItem("idx_question");
+    const storedCounter2 = localStorage.getItem("idx_question2");
     if (storedCounter) {
       setCounter(JSON.parse(storedCounter));
     }
+    if (storedCounter2) {
+      setCounter2(JSON.parse(storedCounter2));
+    }
   }, []);
-  const openExercise = async () => {
-    await axios
-      .get(urlAPI)
-      .then((response) => {
+  useEffect(() => {
+    const result = localStorage.getItem("result");
+    if (result) {
+      setResult(JSON.parse(result));
+    }
+    const result2 = localStorage.getItem("result2");
+    if (result2) {
+      setResult2(JSON.parse(result2));
+    }
+  }, []);
+  useEffect(() => {
+    const exercise = localStorage.getItem("exercise");
+    if (exercise) {
+      const arr = JSON.parse(exercise).data;
+      arr.splice(5, 9);
+      setExercise(arr);
+      setTimeRecord(JSON.parse(exercise).inputTimer);
+    }
+  }, []);
+
+  const openExercise = (id) => {
+    switch (id) {
+      case 1:
         navigate("/homeworkdetail", {
-          state: { exercise: response.data },
+          state: {
+            exercise: { data: exercise1, inputTimer: timeRecord },
+            id,
+          },
         });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        break;
+      case 2:
+        navigate("/homeworkdetail", {
+          state: {
+            exercise: { data: exercise2, inputTimer: timeRecord },
+            id,
+          },
+        });
+        break;
+      default:
+        break;
+    }
   };
   return (
     <TableContainer component={Paper}>
@@ -117,42 +145,32 @@ export default function HomeworkTable() {
             <TableCell>Tên</TableCell>
             <TableCell>Tiến độ</TableCell>
             <TableCell align="center">Hạn nộp bài</TableCell>
-            <TableCell align="center">Tải tài liệu</TableCell>
-            <TableCell align="center">Nộp bài</TableCell>
+            <TableCell align="center">Kết quả</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {rows.map((item) => (
             <TableRow
-              key={row.name}
+              key={item.id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell>
                 <Link
                   color="#1a90ff"
                   underline="hover"
-                  onClick={() => openExercise()}
+                  onClick={() => openExercise(item.id)}
                 >
-                  {row.name}
+                  {item.name}
                 </Link>
               </TableCell>
               <TableCell>
                 <BorderLinearProgress
                   variant="determinate"
-                  value={progressApp * 100}
+                  value={item.progress * 100}
                 />
               </TableCell>
-              <TableCell align="center">{row.deadline}</TableCell>
-              <TableCell align="center">
-                <IconButton href={row.download}>
-                  <DownloadIcon />
-                </IconButton>
-              </TableCell>
-              <TableCell align="center">
-                <IconButton href={row.upload}>
-                  <FileUploadIcon />
-                </IconButton>
-              </TableCell>
+              <TableCell align="center">{item.deadline}</TableCell>
+              <TableCell align="center">{item.result} / 10 điểm</TableCell>
             </TableRow>
           ))}
         </TableBody>
