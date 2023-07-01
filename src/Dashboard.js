@@ -127,7 +127,7 @@ function DashboardContent() {
             }}
           >
             <Typography component="h3" variant="h3 " color="inherit">
-              {locationInfo.className}
+              {locationInfo?.className}
             </Typography>
             <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon />

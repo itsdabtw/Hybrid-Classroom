@@ -18,23 +18,13 @@ function HomeworkDetail() {
   const location = useLocation();
   const navigate = useNavigate();
   const { data, inputTimer } = location.state.exercise;
+  const id = location.state.id;
+  const listExercise = location.state.listExercise;
+  const exerciseAPI = location.state.exerciseAPI;
   const [timeUp, setTimeUp] = useState(false);
-
   const questions = data;
   const mdTheme = createTheme();
   const minutesDefalut = inputTimer;
-
-  useEffect(() => {
-    const handleBack = () => {
-      localStorage.removeItem(
-        location.state.id === 1 ? "idx_question" : "idx_question2"
-      );
-      localStorage.removeItem(location.state.id === 1 ? "result" : "result2");
-      console.log("remove");
-    };
-
-    window.addEventListener("popstate", handleBack);
-  }, []);
 
   const onCompleteRecord = () => {
     alert("Hết thời gian làm bài");
@@ -102,7 +92,9 @@ function HomeworkDetail() {
           <QuestionCard
             questions={questions}
             isTimeUp={timeUp}
-            id={location.state.id}
+            id={id - 1}
+            listExercise={listExercise}
+            exerciseAPI={exerciseAPI}
           />
         </Container>
       </Box>
