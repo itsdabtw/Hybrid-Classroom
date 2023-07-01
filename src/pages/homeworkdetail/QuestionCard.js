@@ -12,7 +12,7 @@ import FormControl from "@mui/material/FormControl";
 import Result from "./Result";
 
 export default function QuestionCard(props) {
-  const { questions, isTimeUp, id } = props;
+  const { questions, isTimeUp, id, listExercise, exerciseAPI } = props;
   const [value, setValue] = React.useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
   const [answers, setAnswers] = React.useState([]);
@@ -42,9 +42,26 @@ export default function QuestionCard(props) {
   const restartQuiz = () => {
     window.location.reload();
   };
-  // if (finishedQuiz) {
-  //   props.isComplete(true);
-  // }
+  React.useEffect(() => {
+    const handleBack = () => {
+      const data = listExercise.map((item, index) => {
+        if (index === id) {
+          return { ...item, progress: progress, result: null };
+        }
+        return item;
+      });
+      const dataAPI = exerciseAPI.map((item) => {
+        return { ...item, progress: progress, result: null };
+      });
+      localStorage.setItem(
+        id === -1 ? "exercise" : "list_exercise",
+        JSON.stringify(id === -1 ? dataAPI : data)
+      );
+      window.location.reload();
+    };
+
+    window.addEventListener("popstate", handleBack);
+  }, [answers]);
 
   if (finishedQuiz) {
     return (
@@ -55,9 +72,11 @@ export default function QuestionCard(props) {
         isComplete={true}
         progress={progress}
         id={id}
+        listExercise={listExercise}
       />
     );
   }
+
   return (
     <Box sx={{ minWidth: 275 }}>
       <Card variant="outlined" sx={{ backgroundColor: "rgba(0,128,128,0.1)" }}>

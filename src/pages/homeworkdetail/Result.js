@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Typography,
   Card,
@@ -9,30 +9,50 @@ import {
 import { useNavigate } from "react-router-dom";
 
 export default function Result(props) {
-  const { answers, restartQuiz, questions, isComplete, progress, id } = props;
+  const {
+    answers,
+    restartQuiz,
+    questions,
+    isComplete,
+    progress,
+    id,
+    listExercise,
+  } = props;
   const navigate = useNavigate();
-
   const correctAnswers = useMemo(() => {
     return questions.filter((q, i) => {
       return q.answer === parseInt(answers[i]);
     }).length;
   }, [answers]);
+  const [exercise, setExercise] = React.useState([]);
 
+  useEffect(() => {
+    const exercises = localStorage.getItem("exercise");
+    if (exercises) {
+      const arr = JSON.parse(exercises);
+      setExercise(arr);
+    }
+  }, []);
+  // console.log({ exercise });
+  // console.log({ id });
   const handelBack = () => {
     if (isComplete) {
       const results = (10 / questions.length) * correctAnswers;
-      localStorage.setItem(
-        id === 1 ? "result" : "result2",
-        JSON.stringify(results.toFixed(0))
-      );
-      localStorage.setItem(
-        id === 1 ? "idx_question" : "idx_question2",
-        JSON.stringify(progress)
-      );
+      const data = listExercise.map((item, index) => {
+        if (index === id) {
+          return { ...item, result: results.toFixed(0), progress: progress };
+        }
+        return item;
+      });
+      const dataAPI = exercise.map((item) => {
+        return { ...item, result: results.toFixed(0), progress: progress };
+      });
 
-      setTimeout(() => {
-        navigate("/homework");
-      }, 500);
+      localStorage.setItem(
+        id === -1 ? "exercise" : "list_exercise",
+        JSON.stringify(id === -1 ? dataAPI : data)
+      );
+      navigate("/homework");
     }
   };
 

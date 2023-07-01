@@ -8,81 +8,122 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import axios from "axios";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
+import moment from "moment";
 
-export default function FormDialog() {
+export default function FormDialog(props) {
+  const { listExercise } = props;
   const [open, setOpen] = React.useState(false);
   const [result, setResult] = React.useState([]);
   const [question, setQuestion] = React.useState("");
   const [inputTimer, setTimer] = React.useState("");
+  const [deadline, setDeadline] = React.useState("");
+  const [counter, setCounter] = React.useState([]);
   const [correctAnswer, setCorrectAnswer] = React.useState("");
-  const [alueAnswerA, setValueAnswerA] = React.useState("");
-  const [alueAnswerB, setValueAnswerB] = React.useState("");
-  const [alueAnswerC, setValueAnswerC] = React.useState("");
-  const [alueAnswerD, setValueAnswerD] = React.useState("");
-
+  const [alueAnswerA, setValueAnswerA] = React.useState("A. ");
+  const [alueAnswerB, setValueAnswerB] = React.useState("B. ");
+  const [alueAnswerC, setValueAnswerC] = React.useState("C. ");
+  const [alueAnswerD, setValueAnswerD] = React.useState("D. ");
+  const reset = () => {
+    setQuestion("");
+    setCorrectAnswer("");
+    setValueAnswerA("A. ");
+    setValueAnswerB("B. ");
+    setValueAnswerC("C. ");
+    setValueAnswerD("D. ");
+  };
   const handleClickOpen = () => {
     setOpen(true);
   };
-  const urlAPI = "http://54.253.92.7/api/v1/quetion/custom/ktmt001";
 
   const handleClose = async () => {
-    await axios
-      .post(urlAPI, {
-        correctAnswer: correctAnswer,
+    // await axios
+    //   .post(urlAPI, {
+    //     correctAnswer: correctAnswer,
+    //     inputTimer: inputTimer,
+    //     options: [alueAnswerA, alueAnswerB, alueAnswerC, alueAnswerD],
+    //     tittle: question,
+    //   })
+    //   .then(() => {
+    //     setOpen(false);
+    //     axios
+    //       .get(urlAPI)
+    //       .then((response) => {
+    //         localStorage.setItem("exercise", JSON.stringify(response.data));
+    //         console.log({ response });
+    //       })
+    //       .catch((err) => {
+    //         console.log(err);
+    //       });
+    //   })
+    //   .catch((error) => {
+    //     // console.log("Wrong ID or Password");
+    //     console.log(error);
+    //   })
+    //   .finally(() => window.location.reload());
+
+    const arr = [
+      {
         inputTimer: inputTimer,
-        options: [alueAnswerA, alueAnswerB, alueAnswerC, alueAnswerD],
-        tittle: question,
-      })
-      .then(() => {
-        setOpen(false);
-        axios
-          .get(urlAPI)
-          .then((response) => {
-            localStorage.setItem("exercise", JSON.stringify(response.data));
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((error) => {
-        // console.log("Wrong ID or Password");
-        console.log(error);
-      })
-      .finally(() => window.location.reload());
-  };
+        deadline: moment(deadline.$d).format("DD-MM-YYYY"),
+        data: result,
+        progress: null,
+        result: null,
+      },
+    ];
 
-  const getTimeRecord = (event) => {
-    setTimer(event.target.value);
+    if (listExercise) {
+      const newArr = listExercise.concat(arr);
+      localStorage.setItem("list_exercise", JSON.stringify(newArr));
+    } else {
+      localStorage.setItem("list_exercise", JSON.stringify(arr));
+    }
+    window.location.reload();
   };
-
   const handleNextAnswer = () => {
     const data = {
-      title: question,
-      options: [alueAnswerA, alueAnswerB, alueAnswerC, alueAnswerD],
-      correctAnswer: correctAnswer,
-      inputTimer: inputTimer,
+      content: question,
+      options: [
+        { description: alueAnswerA },
+        { description: alueAnswerB },
+        { description: alueAnswerC },
+        { description: alueAnswerD },
+      ],
+      answer: correctAnswer,
     };
     setResult([...result, data]);
+    reset();
   };
-  const handleChangeText = (event) => {
-    setQuestion(event.target.value);
-  };
-
-  const getCorrectAnswer = (event) => {
-    setCorrectAnswer(event.target.value);
-  };
-
-  const handleChangeText1 = (event) => {
-    setValueAnswerA({ description: event.target.value });
-  };
-  const handleChangeText2 = (event) => {
-    setValueAnswerB({ description: event.target.value });
-  };
-  const handleChangeText3 = (event) => {
-    setValueAnswerC({ description: event.target.value });
-  };
-  const handleChangeText4 = (event) => {
-    setValueAnswerD({ description: event.target.value });
+  const handleChangeText = (event, id) => {
+    switch (id) {
+      case 1:
+        setQuestion(event.target.value);
+        break;
+      case 2:
+        setValueAnswerA(event.target.value);
+        break;
+      case 3:
+        setValueAnswerB(event.target.value);
+        break;
+      case 4:
+        setValueAnswerC(event.target.value);
+        break;
+      case 5:
+        setValueAnswerD(event.target.value);
+        break;
+      case 6:
+        setCorrectAnswer(event.target.value);
+        break;
+      case 7:
+        setTimer(event.target.value);
+        break;
+      default:
+        break;
+    }
   };
 
   const listDialog = [
@@ -135,11 +176,23 @@ export default function FormDialog() {
           <DialogContentText>
             Thêm câu hỏi mới cho bài tập của bạn thêm phong phú
           </DialogContentText>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoContainer components={["DatePicker"]}>
+              <DatePicker
+                label="Hạn nộp bài"
+                value={deadline}
+                onChange={(newValue) => {
+                  setDeadline(newValue);
+                }}
+              />
+            </DemoContainer>
+          </LocalizationProvider>
           <TextField
             margin="dense"
             label="Thời gian làm bài"
             placeholder="Nhập số phút"
-            onChange={getTimeRecord}
+            type="number"
+            onChange={(event) => handleChangeText(event, 7)}
           />
           {listDialog.map((item) => {
             return (
@@ -150,31 +203,25 @@ export default function FormDialog() {
                 label={item.label}
                 fullWidth
                 variant={item.variant}
-                defaultValue={item.defaultValue}
                 placeholder={item.placeholder}
                 multiline
                 maxRows={4}
                 onChange={(event) => {
-                  switch (item.id) {
-                    case 1:
-                      handleChangeText(event);
-                      break;
-                    case 2:
-                      handleChangeText1(event);
-                      break;
-                    case 3:
-                      handleChangeText2(event);
-                      break;
-                    case 4:
-                      handleChangeText3(event);
-                      break;
-                    case 5:
-                      handleChangeText4(event);
-                      break;
-                    default:
-                      break;
-                  }
+                  handleChangeText(event, item.id);
                 }}
+                value={
+                  item.id === 1
+                    ? question
+                    : item.id === 2
+                    ? alueAnswerA
+                    : item.id === 3
+                    ? alueAnswerB
+                    : item.id === 4
+                    ? alueAnswerC
+                    : item.id === 5
+                    ? alueAnswerD
+                    : ""
+                }
               />
             );
           })}
@@ -184,7 +231,7 @@ export default function FormDialog() {
             <Select
               value={correctAnswer}
               label="Đáp án"
-              onChange={getCorrectAnswer}
+              onChange={(event) => handleChangeText(event, 6)}
             >
               <MenuItem value={1}>1</MenuItem>
               <MenuItem value={2}>2</MenuItem>
@@ -195,7 +242,7 @@ export default function FormDialog() {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpen(false)}>Huỷ</Button>
-          <Button onClick={handleNextAnswer}>Câu hỏi tiếp theo</Button>
+          <Button onClick={handleNextAnswer}>Lưu câu hỏi</Button>
           <Button
             onClick={handleClose}
             sx={{ backgroundColor: "#308fe8", color: "white" }}

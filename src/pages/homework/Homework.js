@@ -74,6 +74,8 @@ const mdTheme = createTheme();
 
 function HomeworkContent() {
   const [open, setOpen] = React.useState(true);
+  const [exercise, setExercise] = React.useState([]);
+  const [listExercise, setListExercise] = React.useState([]);
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -81,11 +83,51 @@ function HomeworkContent() {
     axios
       .get("http://54.253.92.7/api/v1/quetion/custom/ktmt001")
       .then((response) => {
-        localStorage.setItem("exercise", JSON.stringify(response.data));
+        const dataAPI = response?.data?.data?.filter(
+          (item, index) =>
+            item.answer &&
+            item.answer !== "" &&
+            item.content !== "" &&
+            item.content !== "cau hoi 1" &&
+            index !== 5 &&
+            item.content !== "cau hoi" &&
+            item.content !== "Cau hoi 1" &&
+            item.content !== "ABC"
+        );
+        dataAPI?.splice(6, 4);
+        if (!exercise) {
+          localStorage.setItem(
+            "exercise",
+            JSON.stringify([
+              {
+                deadline: "01-07-2023",
+                inputTimer: response.data.inputTimer,
+                data: dataAPI,
+                progress: null,
+                result: null,
+              },
+            ])
+          );
+        }
       })
       .catch((err) => {
         console.log(err);
       });
+  }, [exercise]);
+  React.useEffect(() => {
+    const exercises = localStorage.getItem("exercise");
+    if (exercises) {
+      const arr = JSON.parse(exercises);
+      setExercise(arr);
+    }
+  }, []);
+  React.useEffect(() => {
+    const list_exercise = localStorage.getItem("list_exercise");
+    if (list_exercise) {
+      const arr = JSON.parse(list_exercise);
+      setListExercise(arr);
+    }
+    // localStorage.removeItem("list_exercise");
   }, []);
   return (
     <ThemeProvider theme={mdTheme}>
@@ -167,10 +209,10 @@ function HomeworkContent() {
               }}
             >
               <Title>Bài tập</Title>
-              <FormDialog />
+              <FormDialog listExercise={listExercise} />
               <Grid container spacing={3}>
                 <Grid item xs={12}>
-                  <HomeworkTable></HomeworkTable>
+                  <HomeworkTable exerciseAPI={exercise}></HomeworkTable>
                 </Grid>
               </Grid>
             </Paper>
