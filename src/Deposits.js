@@ -5,22 +5,16 @@ import Typography from "@mui/material/Typography";
 import Title from "./Title";
 import CircularProgress from "@mui/material/CircularProgress";
 import Stack from "@mui/material/Stack";
-import { useState } from "react";
-
-function preventDefault(event) {
-  event.preventDefault();
-}
-
-export default function Deposits() {
-  const [isOnline, setIsOnline] = useState(false);
-  const handleClass = () => {
-    setIsOnline(!isOnline);
-  };
+import LogoutIcon from "@mui/icons-material/Logout";
+const Deposits = ({ onChangeStatus, isOnline, isOpenMeeting, handleClick }) => {
   const role = localStorage.getItem("role");
   const current = new Date();
   const date = `${current.getDate()}/${
     current.getMonth() + 1
   }/${current.getFullYear()}`;
+
+  const status = isOnline ? "Đóng lớp" : "Mở lớp";
+  const title = isOpenMeeting ? "Thoát" : "Vào lớp";
   return (
     <React.Fragment>
       <Title>Tình trạng lớp học</Title>
@@ -52,26 +46,26 @@ export default function Deposits() {
         style={{
           display: "flex",
           width: "100%",
-          justifyContent: "space-between",
+          justifyContent: role === "teacher" ? "space-around" : "center",
         }}
       >
-        {isOnline && role == "teacher" ? (
-          <Button variant="contained" onClick={handleClass}>
-            Đóng lớp
-          </Button>
-        ) : (
-          <Button variant="contained" onClick={handleClass}>
-            Mở lớp
+        {role === "teacher" && (
+          <Button variant="contained" onClick={onChangeStatus}>
+            {status}
           </Button>
         )}
+
         <Button
-          href="https://meet.google.com/"
+          // href="https://meet.google.com/"
           variant="contained"
-          endIcon={<SendIcon />}
+          endIcon={isOpenMeeting ? <LogoutIcon /> : <SendIcon />}
+          onClick={handleClick}
+          disabled={!isOnline}
         >
-          Vào lớp
+          {title}
         </Button>
       </div>
     </React.Fragment>
   );
-}
+};
+export default Deposits;

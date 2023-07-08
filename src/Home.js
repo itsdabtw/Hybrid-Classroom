@@ -18,6 +18,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const drawerWidth = 240;
 const cards = [1, 2, 3, 4, 5, 6];
@@ -75,8 +76,21 @@ function HomeContent() {
     }
   };
 
+  const getStatusMeeting = async () => {
+    await axios
+      .get("http://54.253.92.7/api/v1/attendance/6426ffcb9111ba1a3f74a55f")
+      .then((reponse) => {
+        const data = reponse.data.data.isAttendance;
+        localStorage.setItem("status_meeting", data.toString());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     callDataApi();
+    getStatusMeeting();
   }, []);
 
   return (

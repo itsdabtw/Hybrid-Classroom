@@ -80,6 +80,13 @@ function HomeworkContent() {
     setOpen(!open);
   };
   React.useEffect(() => {
+    const exercises = localStorage.getItem("exercise");
+    if (exercises) {
+      const arr = JSON.parse(exercises);
+      setExercise(arr);
+    }
+  }, []);
+  React.useEffect(() => {
     axios
       .get("http://54.253.92.7/api/v1/quetion/custom/ktmt001")
       .then((response) => {
@@ -95,7 +102,7 @@ function HomeworkContent() {
             item.content !== "ABC"
         );
         dataAPI?.splice(6, 4);
-        if (!exercise) {
+        if (exercise.length === 0) {
           localStorage.setItem(
             "exercise",
             JSON.stringify([
@@ -114,13 +121,6 @@ function HomeworkContent() {
         console.log(err);
       });
   }, [exercise]);
-  React.useEffect(() => {
-    const exercises = localStorage.getItem("exercise");
-    if (exercises) {
-      const arr = JSON.parse(exercises);
-      setExercise(arr);
-    }
-  }, []);
   React.useEffect(() => {
     const list_exercise = localStorage.getItem("list_exercise");
     if (list_exercise) {
