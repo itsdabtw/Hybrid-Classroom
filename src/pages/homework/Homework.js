@@ -121,7 +121,6 @@ function HomeworkContent() {
         console.log(err);
       });
   }, [exercise]);
-
   React.useEffect(() => {
     const list_exercise = localStorage.getItem("list_exercise");
     if (list_exercise) {
