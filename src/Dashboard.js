@@ -22,7 +22,8 @@ import Calendar from "./components/Calendar";
 import Title from "./Title";
 import Deposits from "./Deposits";
 import { useLocation } from "react-router-dom";
-
+import JitsiMeetPage from "./pages/meeting";
+import axios from "axios";
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -72,10 +73,64 @@ const Drawer = styled(MuiDrawer, {
 const mdTheme = createTheme();
 
 function DashboardContent() {
+  const url = "http://54.253.92.7/api/v1/attendance/6426ffcb9111ba1a3f74a55f";
+  const statusMeetingString = localStorage.getItem("status_meeting");
+  const statusMeeting = JSON.parse(statusMeetingString);
   const locationInfo = useLocation().state;
   const [open, setOpen] = React.useState(true);
+  const [isOpenMeeting, setOpenMeeting] = React.useState(false);
+  const [isOnline, setIsOnline] = React.useState(statusMeeting);
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      getStatusMeeting();
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const getStatusMeeting = async () => {
+    await axios
+      .get(url)
+      .then((response) => {
+        localStorage.setItem(
+          "status_meeting",
+          response.data.data.isAttendance.toString()
+        );
+        setIsOnline(response.data.data.isAttendance);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const toggleDrawer = () => {
     setOpen(!open);
+  };
+
+  const handelOpenRoom = () => {
+    if (isOpenMeeting) {
+      setOpenMeeting(false);
+    } else {
+      setOpenMeeting(true);
+    }
+  };
+
+  const handelOpenMeeting = async () => {
+    await axios
+      .put(url, {
+        note: "",
+        isAttendance: !isOnline,
+      })
+      .then((response) => {
+        localStorage.setItem(
+          "status_meeting",
+          response.data.data.isAttendance.toString()
+        );
+        setIsOnline(!isOnline);
+        setOpenMeeting(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -127,7 +182,7 @@ function DashboardContent() {
             }}
           >
             <Typography component="h3" variant="h3 " color="inherit">
-              {locationInfo.className}
+              {locationInfo?.className}
             </Typography>
             <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon />
@@ -149,25 +204,41 @@ function DashboardContent() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Title>Lịch học</Title>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={8} lg={9}>
-                <Calendar></Calendar>
+          <Container
+            maxWidth={isOpenMeeting ? "xl" : "lg"}
+            sx={{ mt: 4, mb: 4 }}
+          >
+            <>
+              <Title>Lịch học</Title>
+
+              <Grid container spacing={3}>
+                <Grid item xs={12} md={8} lg={9}>
+                  {isOpenMeeting ? (
+                    <JitsiMeetPage className={locationInfo?.className} />
+                  ) : (
+                    <Calendar />
+                  )}
+                </Grid>
+                <Grid item xs={12} md={4} lg={3}>
+                  <Paper
+                    sx={{
+                      p: 2,
+                      display: "flex",
+                      flexDirection: "column",
+                      height: 240,
+                    }}
+                  >
+                    <Deposits
+                      onChangeStatus={handelOpenMeeting}
+                      isOnline={isOnline}
+                      className={locationInfo?.className}
+                      isOpenMeeting={isOpenMeeting}
+                      handleClick={handelOpenRoom}
+                    />
+                  </Paper>
+                </Grid>
               </Grid>
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 240,
-                  }}
-                >
-                  <Deposits />
-                </Paper>
-              </Grid>
-            </Grid>
+            </>
           </Container>
         </Box>
       </Box>

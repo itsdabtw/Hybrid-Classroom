@@ -30,87 +30,36 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-export default function HomeworkTable() {
+export default function HomeworkTable(props) {
+  const { exerciseAPI } = props;
   const navigate = useNavigate();
-  const [progressApp, setCounter] = useState(0);
-  const [progressApp2, setCounter2] = useState(0);
-  const [result, setResult] = useState(0);
-  const [result2, setResult2] = useState(0);
-  const [exercise, setExercise] = useState([]);
-  const [timeRecord, setTimeRecord] = useState(1);
-
-  const exercise1 = exercise?.filter((item, index) => index < 5);
-  const exercise2 = exercise?.filter((item, index) => index >= 5 && index < 10);
-  console.log({ exercise2 });
-  console.log({ exercise1 });
-  const rows = [
-    {
-      id: 1,
-      name: "Bài tập 1",
-      progress: progressApp,
-      deadline: "01-07-2023",
-      result: result,
-    },
-    {
-      id: 2,
-      name: "Bài tập 2",
-      progress: progressApp2,
-      deadline: "02-07-2023",
-      result: result2,
-    },
-  ];
+  const [listExercise, setListExercise] = useState();
+  const [data, setData] = useState(exerciseAPI);
 
   useEffect(() => {
-    const storedCounter = localStorage.getItem("idx_question");
-    const storedCounter2 = localStorage.getItem("idx_question2");
-    if (storedCounter) {
-      setCounter(JSON.parse(storedCounter));
+    const list_exercise = localStorage.getItem("list_exercise");
+    if (list_exercise) {
+      setListExercise(JSON.parse(list_exercise));
+    } else {
+      setListExercise(exerciseAPI);
     }
-    if (storedCounter2) {
-      setCounter2(JSON.parse(storedCounter2));
-    }
-  }, []);
-  useEffect(() => {
-    const result = localStorage.getItem("result");
-    if (result) {
-      setResult(JSON.parse(result));
-    }
-    const result2 = localStorage.getItem("result2");
-    if (result2) {
-      setResult2(JSON.parse(result2));
-    }
-  }, []);
-  useEffect(() => {
-    const exercise = localStorage.getItem("exercise");
-    if (exercise) {
-      const arr = JSON.parse(exercise).data;
-      arr.splice(5, 9);
-      setExercise(arr);
-      setTimeRecord(JSON.parse(exercise).inputTimer);
-    }
-  }, []);
 
-  const openExercise = (id) => {
-    switch (id) {
-      case 1:
-        navigate("/homeworkdetail", {
-          state: {
-            exercise: { data: exercise1, inputTimer: timeRecord },
-            id,
-          },
-        });
-        break;
-      case 2:
-        navigate("/homeworkdetail", {
-          state: {
-            exercise: { data: exercise2, inputTimer: timeRecord },
-            id,
-          },
-        });
-        break;
-      default:
-        break;
+    if (listExercise) {
+      setData(exerciseAPI.concat(listExercise));
+    } else {
+      setData(exerciseAPI);
     }
+  }, [exerciseAPI]);
+
+  const openExercise = (item, id) => {
+    navigate("/homeworkdetail", {
+      state: {
+        exercise: { data: item.data, inputTimer: item.inputTimer },
+        id: id,
+        listExercise,
+        exerciseAPI,
+      },
+    });
   };
   return (
     <TableContainer component={Paper}>
@@ -149,28 +98,30 @@ export default function HomeworkTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((item) => (
+          {data?.map((item, index) => (
             <TableRow
-              key={item.id}
+              key={index}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell>
                 <Link
                   color="#1a90ff"
                   underline="hover"
-                  onClick={() => openExercise(item.id)}
+                  onClick={() => openExercise(item, index)}
                 >
-                  {item.name}
+                  {`Bài tập ${index + 1}`}
                 </Link>
               </TableCell>
               <TableCell>
                 <BorderLinearProgress
                   variant="determinate"
-                  value={item.progress * 100}
+                  value={item.progress ? item.progress * 100 : 0}
                 />
               </TableCell>
               <TableCell align="center">{item.deadline}</TableCell>
-              <TableCell align="center">{item.result} / 10 điểm</TableCell>
+              <TableCell align="center">
+                {!item.result ? "0 điểm" : `${item.result} / 10 điểm`}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
