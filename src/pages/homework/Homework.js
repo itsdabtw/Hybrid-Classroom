@@ -128,7 +128,7 @@ function HomeworkContent() {
       const arr = JSON.parse(list_exercise);
       setListExercise(arr);
     }
-    localStorage.removeItem("list_exercise");
+    // localStorage.removeItem("list_exercise");
   }, []);
   return (
     <ThemeProvider theme={mdTheme}>

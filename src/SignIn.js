@@ -49,6 +49,7 @@ export default function SignIn() {
           console.log("You're logged in");
           localStorage.setItem("id", response.data.data.userID);
           localStorage.setItem("role", response.data.data.role);
+          localStorage.setItem("user", JSON.stringify(response.data.data));
           navigate("/home");
         }
       })

@@ -22,7 +22,6 @@ export default function FormDialog(props) {
   const [question, setQuestion] = React.useState("");
   const [inputTimer, setTimer] = React.useState("");
   const [deadline, setDeadline] = React.useState("");
-  const [counter, setCounter] = React.useState([]);
   const [correctAnswer, setCorrectAnswer] = React.useState("");
   const [alueAnswerA, setValueAnswerA] = React.useState("A. ");
   const [alueAnswerB, setValueAnswerB] = React.useState("B. ");
