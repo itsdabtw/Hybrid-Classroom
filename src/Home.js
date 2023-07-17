@@ -16,9 +16,20 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
+const io = require('socket.io-client');
+
+const socket = io('http://54.253.92.7:4024', {
+    query: {
+        token: "19520379"
+    }
+});
+
+
+//const host = "http://localhost:3000";
 
 const drawerWidth = 240;
 const cards = [1, 2, 3, 4, 5, 6];
@@ -52,6 +63,32 @@ function HomeContent() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  
+// Event handlers
+socket.on('connect', () => {
+  console.log('Connected to the server');
+});
+
+socket.on('message', (data) => {
+  console.log('Received message:', data);
+});
+
+socket.on('disconnect', () => {
+  console.log('Disconnected from the server');
+});
+
+// Emit events
+socket.emit('message', 'Hello from client');
+
+  /*
+  const [socketid, setsocketId] = useState();
+
+  const socketRef = useRef();
+
+  useEffect(() => {
+    socketRef.current = socketIOClient.connect(host, {
+      query: { token: socketid }
+    })}); */
 
   const callDataApi = async () => {
     try {

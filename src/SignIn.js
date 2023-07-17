@@ -37,7 +37,9 @@ export default function SignIn() {
     };
     axios
       .post(
-        "http://54.253.92.7/api/v1/auth/login",
+      //"http://54.253.92.7/api/v1/auth/login",
+        "http://54.253.92.7/api/v1/auth/studentLogin/",
+
         {
           username: username,
           password: password,
