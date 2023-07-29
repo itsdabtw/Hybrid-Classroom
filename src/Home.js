@@ -19,17 +19,10 @@ import Axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import socket from "./socket";
+import useSocketSetup from "./components/useSocketSetup";
 
-const io = require('socket.io-client');
-
-const socket = io('http://54.253.92.7:4024', {
-    query: {
-        token: "19520379"
-    }
-});
-
-
-//const host = "http://localhost:3000";
+var msg = localStorage.getItem("id") + "_" + "KTMT0001" + "_hybrid";
 
 const drawerWidth = 240;
 const cards = [1, 2, 3, 4, 5, 6];
@@ -64,32 +57,6 @@ function HomeContent() {
     setOpen(!open);
   };
   
-// Event handlers
-socket.on('connect', () => {
-  console.log('Connected to the server');
-});
-
-socket.on('message', (data) => {
-  console.log('Received message:', data);
-});
-
-socket.on('disconnect', () => {
-  console.log('Disconnected from the server');
-});
-
-// Emit events
-socket.emit('message', 'Hello from client');
-
-  /*
-  const [socketid, setsocketId] = useState();
-
-  const socketRef = useRef();
-
-  useEffect(() => {
-    socketRef.current = socketIOClient.connect(host, {
-      query: { token: socketid }
-    })}); */
-
   const callDataApi = async () => {
     try {
       setLoading(true);
@@ -123,12 +90,16 @@ socket.emit('message', 'Hello from client');
       .catch((err) => {
         console.log(err);
       });
+      socket.emit('noti:activate', msg);
+      console.log(msg);
   };
 
   useEffect(() => {
     callDataApi();
     getStatusMeeting();
   }, []);
+
+  useSocketSetup();
 
   return (
     <ThemeProvider theme={mdTheme}>

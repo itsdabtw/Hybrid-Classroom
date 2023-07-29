@@ -24,7 +24,11 @@ import Deposits from "./Deposits";
 import { useLocation } from "react-router-dom";
 import JitsiMeetPage from "./pages/meeting";
 import axios from "axios";
+import socket from "./socket";
 const drawerWidth = 240;
+
+var msgin = localStorage.getItem("id") + "_" + "KTMT0001" + "_joinclass";
+var msgout = localStorage.getItem("id") + "_" + "KTMT0001" + "_leaveclass";
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -109,8 +113,12 @@ function DashboardContent() {
   const handelOpenRoom = () => {
     if (isOpenMeeting) {
       setOpenMeeting(false);
+      console.log(msgout);
+      socket.emit('noti:status', msgout);
     } else {
       setOpenMeeting(true);
+      console.log(msgin);
+      socket.emit('noti:status', msgin);
     }
   };
 

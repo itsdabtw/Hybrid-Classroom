@@ -10,8 +10,11 @@ import Tooltip from "@mui/material/Tooltip";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
+import socket from "./socket";
 
 var x = localStorage.getItem("id");
+var msg = localStorage.getItem("id") + "_" + "KTMT0001" + "_offline";
+
 
 export default function AccountMenu() {
   const navigate = useNavigate();
@@ -25,6 +28,9 @@ export default function AccountMenu() {
   };
   const handleLogout = () => {
     setAnchorEl(null);
+    console.log(msg);
+    socket.emit('noti:activate', msg);
+    socket.disconnect();
     navigate("/");
   };
   const userJSON = localStorage.getItem("user");
