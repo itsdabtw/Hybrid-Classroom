@@ -36,7 +36,7 @@ export default function DocTable(props) {
     <TableContainer component={Paper}>
       <ListItem>
         <Typography sx={{ display: "flex" }} variant="h6">
-          Lớp: IT001.MTCL
+          Lớp: KTMT0001
         </Typography>
         <Paper
           component="form"

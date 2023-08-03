@@ -178,7 +178,7 @@ function HomeworkContent() {
             }}
           >
             <Typography component="h3" variant="h3 " color="inherit">
-              IT001.MTCL.1
+            KTMT0001
             </Typography>
             <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon />

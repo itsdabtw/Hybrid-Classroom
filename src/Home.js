@@ -62,14 +62,11 @@ function HomeContent() {
       setLoading(true);
       const api_res = await Axios.request({
         baseURL: "http://54.253.92.7/",
-        url: "api/v1/class/customapi/getclassbyid",
-        method: "post",
+        url: "api/v1/schedule/student/" + userID,
+        method: "get",
         headers: {
           "Content-Type": "application/json",
           Accept: "*/*",
-        },
-        params: {
-          id: userID,
         },
       });
       setData(api_res.data.data);
@@ -171,7 +168,7 @@ function HomeContent() {
                               component="img"
                               alt="green iguana"
                               height="140"
-                              image={classInfo.imgClass}
+                              image={'https://img.freepik.com/premium-vector/male-teacher-by-blackboard-pupils-studying-classroom-concept-illustration-education-back-school_131728-147.jpg'}
                             />
                             <CardContent>
                               <Typography
@@ -179,14 +176,20 @@ function HomeContent() {
                                 variant="h5"
                                 component="div"
                               >
-                                {classInfo.nameClass}
+                                Lớp: {classInfo.nameClass}
                               </Typography>
                               <Typography
                                 variant="p"
                                 color="text.secondary"
                                 align="left"
                               >
-                                {classInfo.desClass}
+                                Giảng viên: {classInfo.nameTeacher}
+                              </Typography>
+                              <Typography variant="button" display="block" gutterBottom>
+                                {classInfo.day}
+                              </Typography>
+                              <Typography variant="button" display="block" gutterBottom>
+                                Thời gian: {classInfo.startTime} - {classInfo.endTime}
                               </Typography>
                             </CardContent>
                             <CardActions>
